@@ -1,11 +1,25 @@
 function Thermostat(){
-  this.temperature = 20;
+  this.START_TEMP = 20;
+  this.MIN_TEMP = 10;
+  this._temperature = this.START_TEMP;
+  this._PSMOn = true;
 };
 
 Thermostat.prototype.upButton = function(){
-  this.temperature += 1;
+  this._temperature += 1;
 };
 
 Thermostat.prototype.downButton = function(){
-  this.temperature -= 1;
+  if(this.showTemperature()=== this.MIN_TEMP){
+    throw ('Min temperature is '+ this.MIN_TEMP);
+  }
+  this._temperature -= 1;
+};
+
+Thermostat.prototype.showTemperature = function(){
+  return this._temperature;
+};
+
+Thermostat.prototype.isPSMOn = function(){
+  return this._PSMOn;
 };

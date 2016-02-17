@@ -49,4 +49,33 @@ describe('thermostat', function(){
       expect(function(){thermostat.upButton()}).toThrow('Max temperature is '+ thermostat.GREEDY_MAX_TEMP)
     });
   });
+
+  describe('reset button', function(){
+    it('reset button sets temperature to start tempt', function(){
+      thermostat.upButton();
+      thermostat.resetButton();
+      expect(thermostat.showTemperature()).toEqual(START_TEMP)
+    });
+  });
+
+  describe('showDisplay', function(){
+    it('shows low-usage if temperature is below 18', function(){
+      for(var i = 0; i <= (START_TEMP-thermostat.LOW_USAGE_LIMIT); i++){
+        thermostat.downButton();
+      };
+      expect(thermostat.showDisplay()).toEqual('low-usage')
+    });
+
+    it('shows medium-usage if temperature is below 25', function(){
+      expect(thermostat.showDisplay()).toEqual('medium-usage')
+    });
+
+    it('shows high-usage if temperature is above 25', function(){
+      thermostat.switchPSM()
+      for(var i = 0; i <= (thermostat.MEDIUM_USAGE_LIMIT - START_TEMP); i++){
+        thermostat.upButton();
+      };
+      expect(thermostat.showDisplay()).toEqual('high-usage')
+    });
+  });
 });

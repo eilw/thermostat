@@ -4,7 +4,9 @@ function Thermostat(){
   this._temperature = this.START_TEMP;
   this._PSMOn = true;
   this.MAX_TEMP = 25;
-  this.GREEDY_MAX_TEMP = 32
+  this.GREEDY_MAX_TEMP = 32;
+  this.LOW_USAGE_LIMIT = 18;
+  this.MEDIUM_USAGE_LIMIT = 25;
 };
 
 Thermostat.prototype.upButton = function(){
@@ -39,4 +41,18 @@ Thermostat.prototype._maxTemp = function(){
   } else {
     return this.GREEDY_MAX_TEMP;
   };
+};
+
+Thermostat.prototype.resetButton = function(){
+  this._temperature = this.START_TEMP;
+};
+
+Thermostat.prototype.showDisplay = function(){
+  if(this.showTemperature()<this.LOW_USAGE_LIMIT){
+    return 'low-usage';
+  } else if(this.showTemperature()< this.MEDIUM_USAGE_LIMIT){
+    return 'medium-usage';
+  }else{
+    return 'high-usage';
+  }
 };

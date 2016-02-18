@@ -5,6 +5,7 @@ $( document ).ready(function() {
   var thermo = new Thermostat();
   function updateTemp() {
     $('#temperature').attr('class',thermo.displayColour());
+    $('#temp_display').attr('class',thermo.displayColour());
     $('#temperature').text(thermo.checkTemperature());
   };
 
@@ -26,9 +27,9 @@ $( document ).ready(function() {
   $('#switch-PSM').click(function(){
       thermo.switchPowerSavingMode();
       if(thermo.isPowerSavingOn()){
-        $('#PSS').text('On');
+        $('.PSS').text(' On');
       } else {
-        $('#PSS').text('Off');
+        $('.PSS').text(' Off');
       };
       updateTemp();
      });
@@ -69,15 +70,23 @@ $( document ).ready(function() {
   //   xhttp.send();
   // });
 
-
+  displayWeather('London');
+  function displayWeather(city){
+    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city;
+    var token = '&appid=c198c61276e6ad16021db62ed347d506';
+    var units = '&units=metric';
+    $.get(url + token + units,function(data){
+    $('#ajax-result').text(data.main.temp);
+  });
+    $('.city-name').text(city);
+};
 
   $('#ajax-weather').click(function(){
-      var place = $('#city').val();
-      $.get('http://api.openweathermap.org/data/2.5/weather?q='+ place +'&appid=c198c61276e6ad16021db62ed347d506&units=metric', function(data){
-      $('#ajax-result').text(data.main.temp);
+      var city = $('#city').val();
+      displayWeather(city);
     });
 
-  });
+
 
 
 

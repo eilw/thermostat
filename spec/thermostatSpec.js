@@ -59,6 +59,13 @@ describe("Thermostat",function(){
       expect(thermo.checkTemperature()).toEqual(MAX_TEMP_POWER_SAVING_ON);
     });
 
+    it("takes down the temperature if above max limit",function(){
+      thermo.switchPowerSavingMode();
+      for (var i = 0; i < 10; i++){thermo.upButton();}
+      thermo.switchPowerSavingMode();
+      expect(thermo.checkTemperature()).toEqual(MAX_TEMP_POWER_SAVING_ON);
+    });
+
   });
   describe("Power saving mode is OFF",function(){
     it("the max temperature is 32",function(){
@@ -72,6 +79,26 @@ describe("Thermostat",function(){
     it("turns the thermostat back to its startemp",function(){
       thermo.resetTemperature();
       expect(thermo.checkTemperature()).toEqual(START_TEMP);
+    });
+  });
+
+  describe("toMinTemp",function(){
+    it("turns the thermostat to min",function(){
+      thermo.toMinTemp();
+      expect(thermo.checkTemperature()).toEqual(MIN_TEMP);
+    });
+  });
+
+  describe("toMaxTemp",function(){
+    it("turns the thermostat to max",function(){
+      thermo.toMaxTemp();
+      expect(thermo.checkTemperature()).toEqual(MAX_TEMP_POWER_SAVING_ON);
+    });
+
+    it("turns the thermostat to max",function(){
+      thermo.switchPowerSavingMode();
+      thermo.toMaxTemp();
+      expect(thermo.checkTemperature()).toEqual(MAX_TEMP_POWER_SAVING_OFF);
     });
   });
 

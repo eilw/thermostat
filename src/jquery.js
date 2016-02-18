@@ -75,8 +75,15 @@ $( document ).ready(function() {
     var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city;
     var token = '&appid=c198c61276e6ad16021db62ed347d506';
     var units = '&units=metric';
+    var code = ''
     $.get(url + token + units,function(data){
     $('#ajax-result').text(data.main.temp);
+    console.log(data.weather[0].id);
+    // code = Math.floor((data.weather[0].id)/100);
+    code = data.weather[0].id - 800;
+    console.log(code);
+    $('#weather-icon').empty();
+    $('#weather-icon').prepend("<img id='weather-icon' src='./lib/" + code +".png'>");
   });
     $('.city-name').text(city);
 };

@@ -63,11 +63,19 @@
   color: inherit;
 }
 
-#weather-icon {
+.weather {
   position: relative;
   background-color: black;
   height:200px;
   width: 100%;
+}
+
+#weather-icon{
+  margin-left: 25px;
+  margin-top: 25px;
+  vertical-align: middle;
+  height: 150px;
+  width: 150px;
 }
 
 #city{

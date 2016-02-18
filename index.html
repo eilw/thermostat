@@ -2,6 +2,7 @@
 <html>
   <head>
     <title> Thermostat</title>
+    <link rel="stylesheet" type="text/css" href="css/thermo.css">
     <style>
     a.test{
       font-weight: bold;
@@ -21,6 +22,9 @@
         <p><button id='switch-PSM'>Switch power saving mode</button></p>
       </p>
     </p>
+      <input id='city' type='text' name='city'>
+      <button id='ajax-weather'>Click here to see weather</button>
+      <p>Current temperature: <div id='ajax-result'></div></p>
     <script src='src/thermostat.js'></script>
     <script src="src/jquery-2.2.0.js"></script>
     <script src="src/jquery.js"></script>

@@ -3,41 +3,44 @@ $( document ).ready(function() {
   //     event.preventDefault();
   //     $(this).hide('slow');
   var thermo = new Thermostat();
-  $('#temperature').text(thermo.checkTemperature());
-  $('#temperature-up').click(function(){
+  function updateTemp() {
+    $('#temperature').attr('class',thermo.displayColour());
+    $('#temperature').text(thermo.checkTemperature());
+  };
+
+  updateTemp();  $('#temperature-up').click(function(){
       thermo.upButton();
-      $('#temperature').text(thermo.checkTemperature());
-    });
+      updateTemp();
+     });
 
   $('#temperature-down').click(function(){
       thermo.downButton();
-      $('#temperature').text(thermo.checkTemperature());
-    });
+      updateTemp();
+     });
 
   $('#temperature-reset').click(function(){
       thermo.resetTemperature();
-      $('#temperature').text(thermo.checkTemperature());
-    });
+      updateTemp();
+     });
 
   $('#switch-PSM').click(function(){
       thermo.switchPowerSavingMode();
-      $('#PSS').empty();
       if(thermo.isPowerSavingOn()){
         $('#PSS').text('On');
       } else {
         $('#PSS').text('Off');
       };
-      $('#temperature').text(thermo.checkTemperature());
-    });
+      updateTemp();
+     });
 
   var setMax = function(){
     thermo.toMaxTemp();
-    $('#temperature').text(thermo.checkTemperature());
-  };
+    updateTemp();
+    };
 
   var setMin = function(){
     thermo.toMinTemp();
-    $('#temperature').text(thermo.checkTemperature());
+    updateTemp();
   };
 
   var timeout_id = 0,
@@ -55,6 +58,26 @@ $( document ).ready(function() {
       clearTimeout(timeout_id);
   });
 
+  // $('#ajax-weather').click(function(){
+  //   var xhttp = new XMLHttpRequest();
+  //   xhttp.onreadystatechange = function() {
+  //     if (xhttp.readyState == 4 && xhttp.status == 200) {
+  //       $('#ajax-result').text(xhttp.responseText);
+  //     }
+  //   };
+  //   xhttp.open('GET','api.openweathermap.org/data/2.5/weather?q=London,uk', true);
+  //   xhttp.send();
+  // });
+
+
+
+  $('#ajax-weather').click(function(){
+      var place = $('#city').val();
+      $.get('http://api.openweathermap.org/data/2.5/weather?q='+ place +'&appid=c198c61276e6ad16021db62ed347d506&units=metric', function(data){
+      $('#ajax-result').text(data.main.temp);
+    });
+
+  });
 
 
 
